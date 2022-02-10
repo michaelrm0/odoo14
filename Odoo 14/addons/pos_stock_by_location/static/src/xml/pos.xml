@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+<!-- ProductItem es el nombre que lleva la etiqueta en el producto-->
+<!-- t-inherit-mode viene a ser la modalidad en que será usado esta plantilla
+     1 puede ser para que extienda, quiere decir que se va a usar la misma plantilla de ProductItem pero
+     se agregarán algunas cosas adicionales
+     la otra (primary) forma es utilizar el productItem y reutilizar su plantilla en otro lugar -->
+    <t t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension">
+        <xpath expr="//div[@class='product-name']" position="before">
+<!--            <span>Cnt. Disp: <t t-esc="props.product.qty_available"/></span>-->
+            <t t-foreach="stock_by_location" t-as="sl">
+                <span><t t-esc="sl.location_id[1]"/>: <t t-esc="sl.available_quantity"/></span>
+            </t>
+        </xpath>
+<!--        Se posiciona dentro de los atributos-->
+<!--        <xpath expr="//article" position="attributes">-->
+<!--&lt;!&ndash;        Se está modificando el valor del t-on-click con el valor del spaceClickProduct&ndash;&gt;-->
+<!--            <attribute name="t-on-click">spaceClickProduct</attribute>-->
+<!--        </xpath>-->
+    </t>
+<!--    <t t-inherit="point_of_sale.OrderManagementScreen" t-inherit-mode="extension">-->
+<!--        <xpath expr="//div[@class='control-buttons']" position="inside">-->
+<!--            <button>Transferencia Interna</button>-->
+<!--        </xpath>-->
+<!--    </t>-->
+</templates>

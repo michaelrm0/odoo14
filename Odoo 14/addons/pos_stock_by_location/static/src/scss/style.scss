@@ -1,0 +1,18 @@
+.pos {
+    .product {
+        height: 200px;
+        &:hover {
+            background-color: #7f82ac;
+        }
+    }
+}
+
+// .pos .pos-content {
+//     .price-tag {
+//         background: #00abcd;
+//         width: 100%;
+//         right: 0;
+//         left: 0;
+//         top:0;
+//     }
+// }

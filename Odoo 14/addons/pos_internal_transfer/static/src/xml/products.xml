@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension">
+        <xpath expr="//div[@class='product-name']" position="before">
+            <t t-foreach="stock_by_location" t-as="product" t-key="product.id">
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,356 @@
+<odoo>
+<!--    Vistas-->
+    <record model="ir.ui.view" id="view_form_movement">
+        <field name="name">view.form.sa.movement</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="type_move" widget="radio" required="1"/>
+                        <field name="name" required="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="date" required="1"/>
+                        </group>
+                        <group>
+<!--                                   Deshabilita las opciones de crear y crear y editar-->
+                            <field name="tag_ids"
+                                   widget="many2many_tags"
+                                   context="{'default_type_move': type_move}"
+                                   attrs="{'readonly': [('amount', '&lt;', 50)]}"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"/>
+<!--                            El primer type_move hace referencia a los campos que mantiene category_id
+                                Mientras que el segunto type_move es un campo de la vista presente-->
+                            <field name="category_id"
+                                   attrs="{'required': [('amount', '&gt;', 100)]}"
+                                   domain="[('type_move', '=', type_move)]"
+                                   context="{'default_type_move': type_move, 'default_name': 'Nueva Categoría'}"
+                                   options="{'no_open': True}"/>
+                            <field name="user_id" groups="saldo_app.res_groups_administrator"/>
+                            <field name="email" groups="saldo_app.res_groups_administrator"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+<!--                        El campo imagen será invisible si el tipo de movimiento es ingreso-->
+                        <field name="receipt_image"
+                               widget="image" attrs="{'invisible': [('type_move', '=', 'income')]}"/>
+                    </group>
+                </sheet>
+<!--                Va a permitir ver los cambios realizados de los campos especificados-->
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_form_movement_by_type">
+        <field name="name">view.form.sa.movement.by.type</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="type_move" widget="radio" required="1" invisible="1"/>
+                        <field name="name" required="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" required="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="date" required="1"/>
+                        </group>
+                        <group>
+<!--                                   Deshabilita las opciones de crear y crear y editar-->
+                            <field name="tag_ids"
+                                   widget="many2many_tags"
+                                   context="{'default_type_move': type_move}"
+                                   attrs="{'readonly': [('amount', '&lt;', 50)]}"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"/>
+<!--                            El primer type_move hace referencia a los campos que mantiene category_id
+                                Mientras que el segunto type_move es un campo de la vista presente-->
+                            <field name="category_id"
+                                   attrs="{'required': [('amount', '&gt;', 100)]}"
+                                   domain="[('type_move', '=', type_move)]"
+                                   context="{'default_type_move': type_move, 'default_name': 'Nueva Categoría'}"
+                                   options="{'no_open': True}"/>
+                            <field name="user_id" groups="saldo_app.res_groups_administrator"/>
+                            <field name="email" groups="saldo_app.res_groups_administrator"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+<!--                        El campo imagen será invisible si el tipo de movimiento es ingreso-->
+                        <field name="receipt_image"
+                               widget="image" attrs="{'invisible': [('type_move', '=', 'income')]}"/>
+                    </group>
+                </sheet>
+<!--                Va a permitir ver los cambios realizados de los campos especificados-->
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_tree_movement">
+        <field name="name">view.tree.sa.movement</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="type_move == 'income'" decoration-danger="type_move == 'expense'">
+                <field name="date" optional="show"/>
+                <field name="name"/>
+                <field name="type_move" optional="show"/>
+                <field name="amount" widget="monetary" options="{'currency_field':'currency_id'}" optional="show"/>
+                <field name="tag_ids" optional="hide" widget="many2many_tags"/>
+                <field name="category_id" optional="hide"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="create_uid" groups="saldo_app.res_groups_administrator"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_tree_movement_by_type">
+        <field name="name">view.tree.sa.movement.by.type</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="type_move == 'income'" decoration-danger="type_move == 'expense'">
+                <field name="date" optional="show"/>
+                <field name="name"/>
+                <field name="type_move" invisible="1"/>
+                <field name="amount" widget="monetary" options="{'currency_field':'currency_id'}" optional="show"/>
+                <field name="tag_ids" optional="hide" widget="many2many_tags"/>
+                <field name="category_id" optional="hide"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_search_movement_incomes">
+        <field name="name">view.search.sa.movement.incomes</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="notes"/>
+                <field name="category_id"/>
+                <field name="tag_ids"/>
+
+<!--            strftime() es una función de conversión para actualizar el formato de la fecha-->
+                <filter name="filter_today"
+                        string="Hoy"
+                        domain="[('date','&gt;=',datetime.datetime.combine(context_today(),datetime.time(0,0,0))),
+                        ('date','&lt;=',datetime.datetime.combine(context_today(),datetime.time(23,59,59)))]"/>
+<!--            context_today() es propia de odoo-->
+                <filter name="filter_this_week"
+                        string="Último 7 días"
+                        domain="[('date','&gt;=',datetime.datetime.combine(context_today()-datetime.timedelta(days=7),datetime.time(0,0,0))),
+                        ('date','&lt;=',datetime.datetime.combine(context_today(),datetime.time(23,59,59)))]"/>
+
+                <filter name="group_type_move"
+                        string="Tipo"
+                        context="{'group_by':'type_move'}"/>
+
+                <filter name="group_date"
+                        string="Fecha"
+                        context="{'group_by':'date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_calendar_movement_incomes">
+        <field name="name">view.calendar.movement.incomes</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date" mode="month"><!-- week,day -->
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_search_movement">
+        <field name="name">view.search.sa.movement</field>
+        <field name="model">sa.movements</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="notes"/>
+                <field name="category_id"/>
+                <field name="tag_ids"/>
+
+                <filter name="filter_type_incomes" string="Ingresos" domain="[('type_move','=','income')]"/>
+                <filter name="filter_type_expenses" string="Gastos" domain="[('type_move','=','expense')]"/>
+
+                <separator/>
+<!--            strftime() es una función de conversión para actualizar el formato de la fecha-->
+                <filter name="filter_today"
+                        string="Hoy"
+                        domain="[('date','&gt;=',datetime.datetime.combine(context_today(),datetime.time(0,0,0))),
+                        ('date','&lt;=',datetime.datetime.combine(context_today(),datetime.time(23,59,59)))]"/>
+<!--            context_today() es propia de odoo-->
+                <filter name="filter_this_week"
+                        string="Último 7 días"
+                        domain="[('date','&gt;=',datetime.datetime.combine(context_today()-datetime.timedelta(days=7),datetime.time(0,0,0))),
+                        ('date','&lt;=',datetime.datetime.combine(context_today(),datetime.time(23,59,59)))]"/>
+
+                <filter name="group_type_move"
+                        string="Tipo"
+                        context="{'group_by':'type_move'}"/>
+                 <filter name="group_date"
+                        string="Fecha"
+                        context="{'group_by':'date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_form_category">
+        <field name="name">view.form.category</field>
+        <field name="model">sa.categories</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="type_move"/>
+                        <button name="view_movements" type="object" string="Ver Movimientos"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_res_users_add_movements">
+        <field name="name">view.res.users.add.movements</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_simple_form"/>
+        <field name="arch" type="xml">
+<!--            inside significa que se va a posicionar dentro de la etiqueta sheet-->
+            <xpath expr="sheet" position="inside">
+                <group>
+                    <field name="email"/>
+                    <field name="movement_ids" string="Movimientos"/>
+                    <field name="count_movements"/>
+                    <field name="total_incomes"/>
+                    <field name="total_expenses"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+<!--    Acción de ventana view-->
+    <record model="ir.actions.act_window.view" id="action_window_view_tree_movement_by_type">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="saldo_app.view_tree_movement_by_type"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_window_view_form_movement_by_type">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="saldo_app.view_form_movement_by_type"/>
+    </record>
+
+<!--    Acciones de ventana-->
+    <record model="ir.actions.act_window" id="action_view_movements_incomes">
+        <field name="name">Ingresos</field>
+        <field name="res_model">sa.movements</field>
+        <field name="domain">[('type_move', '=', 'income')]</field>
+        <field name="context">{'default_type_move': 'income'}</field>
+<!--        Vista de búsqueda para la acción de ventana de movimientos de ingresos-->
+        <field name="search_view_id" ref="saldo_app.view_search_movement_incomes"/>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_ids"
+               eval="[(4, ref('saldo_app.action_window_view_tree_movement_by_type')), (4, ref('saldo_app.action_window_view_form_movement_by_type'))]"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_view_movements_expenses">
+        <field name="name">Gastos</field>
+        <field name="res_model">sa.movements</field>
+        <field name="domain">[('type_move', '=', 'expense')]</field>
+        <field name="context">{'default_type_move': 'expense'}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_view_movements">
+        <field name="name">Movimientos</field>
+        <field name="res_model">sa.movements</field>
+        <field name="limit">80</field>
+<!--        Se debe indicar el type=xml cuando se usan etiquetas-->
+        <field name="help" type="xml">
+            <p class="o_view_nocontent_smiling_face">Empieza creando tu primer movimiento</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_view_categories">
+        <field name="name">Categorías</field>
+        <field name="res_model">sa.categories</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_view_tags">
+        <field name="name">Etiquetas</field>
+        <field name="res_model">sa.tags</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_view_currency">
+        <field name="name">Monedas</field>
+        <field name="res_model">res.currency</field>
+    </record>
+
+    <record model="ir.actions.server" id="action_server_my_account">
+        <field name="name">Mi cuenta</field>
+<!--        Si fuera categoría sería saldo_app.model_sa_categories-->
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="state">code</field>
+        <field name="code">action = model.my_account()</field>
+    </record>
+<!--    Menús-->
+    <menuitem name="Mi cuenta"
+              web_icon="saldo_app,static/description/micuenta.png"
+              id="menu_my_account"
+              action="saldo_app.action_server_my_account"/>
+
+    <menuitem name="Saldo APP"
+              web_icon="saldo_app,static/description/saldoapp.png"
+              id="menu_main_saldoapp"
+              action="saldo_app.action_view_movements"/>
+
+    <menuitem name="Movimientos"
+              parent="saldo_app.menu_main_saldoapp"
+              id="menu_movements"/>
+
+    <menuitem name="Todos"
+              parent="saldo_app.menu_movements"
+              id="menu_movements_todo"
+              action="saldo_app.action_view_movements"/>
+
+    <menuitem name="Ingresos"
+              parent="saldo_app.menu_movements"
+              id="menu_movements_incomes"
+              action="saldo_app.action_view_movements_incomes"/>
+
+    <menuitem name="Gastos"
+              parent="saldo_app.menu_movements"
+              id="menu_movements_expenses"
+              action="saldo_app.action_view_movements_expenses"/>
+
+    <menuitem name="Ajustes"
+              parent="saldo_app.menu_main_saldoapp"
+              id="menu_settings"
+              action="saldo_app.action_view_categories"/>
+
+    <menuitem name="Categorías"
+              parent="saldo_app.menu_settings"
+              id="menu_categories"
+              action="saldo_app.action_view_categories"/>
+
+    <menuitem name="Etiquetas"
+              parent="saldo_app.menu_settings"
+              id="menu_tags"
+              action="saldo_app.action_view_tags"/>
+
+    <menuitem name="Monedas"
+              parent="saldo_app.menu_settings"
+              id="menu_currency"
+              action="saldo_app.action_view_currency"/>
+</odoo>

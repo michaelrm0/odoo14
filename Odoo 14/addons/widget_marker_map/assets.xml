@@ -1,0 +1,11 @@
+<odoo>
+<!--    web.assets_backend es como la cabecera para la inserción del css, js u otro-->
+    <template id="assets_backend" inherit_id="web.assets_backend">
+<!--        Se va a insertar después(after) de la última etiqueta(script[last()])-->
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=default"/>
+            <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcTspQ49qzVf84eFC-qfd_xqxNasKvONg&amp;libraries=&amp;v=weekly"/>
+            <script src="/widget_marker_map/static/src/js/marker.js" type="text/javascript"/>
+        </xpath>
+    </template>
+</odoo>

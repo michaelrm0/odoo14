@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReceiptInternalTransfer" owl="1">
+        <div class="pos-receipt">
+            <t t-if="receipt.company.logo">
+                <img class="pos-receipt-logo" t-att-src="receipt.company.logo" alt="Logo"/>
+                <br/>
+            </t>
+            <t t-if="!receipt.company.logo">
+                <h2 class="pos-receipt-center-align">
+                    <t t-esc="receipt.company.name" />
+                </h2>
+                <br/>
+            </t>
+            <div class="pos-receipt-contact">
+                <t t-if="receipt.company.contact_address">
+                    <div><t t-esc="receipt.company.contact_address" /></div>
+                </t>
+                <t t-if="receipt.company.phone">
+                    <div>Tel:<t t-esc="receipt.company.phone" /></div>
+                </t>
+                <t t-if="receipt.company.vat">
+                    <div><t t-esc="receipt.company.vat_label"/>:<t t-esc="receipt.company.vat" /></div>
+                </t>
+                <t t-if="receipt.company.email">
+                    <div><t t-esc="receipt.company.email" /></div>
+                </t>
+                <t t-if="receipt.company.website">
+                    <div><t t-esc="receipt.company.website" /></div>
+                </t>
+                <t t-if="receipt.header_html">
+                    <t t-raw="receipt.header_html" />
+                </t>
+                <t t-if="!receipt.header_html and receipt.header">
+                    <div style="white-space:pre-line"><t t-esc="receipt.header" /></div>
+                </t>
+            </div>
+            <br /><br />
+
+            <div class="orderlines">
+                <span style="font-size:14px;">Operación:</span>
+                <span t-esc="values.picking_type_id[1]" style="font-size:14px;" class="pos-receipt-right-align"/><br/>
+                <span style="font-size:14px;">Tipo:</span>
+                <span style="font-size:14px;" class="pos-receipt-right-align">Transferencia</span><br/>
+                <span style="font-size:14px;">Origen:</span>
+                <span t-esc="values.location_id[1]" style="font-size:14px;" class="pos-receipt-right-align"/><br/>
+                <span style="font-size:14px;">Destino:</span>
+                <span t-esc="values.location_dest_id[1]" style="font-size:14px;" class="pos-receipt-right-align"/><br/>
+                <span style="font-size:14px;">Fecha y Hora:</span>
+                <span t-esc="values.create_date" style="font-size:14px;" class="pos-receipt-right-align"/><br/>
+                <span style="font-size:14px;">Estado:</span>
+                <t t-if="values.state == 'draft'">
+                    <span style="font-size:14px;" class="pos-receipt-right-align">Borrador</span><br/>
+                </t>
+                <t t-if="values.state == 'confirmed'">
+                    <span style="font-size:14px;" class="pos-receipt-right-align">En espera</span><br/>
+                </t>
+                <t t-if="values.state == 'assigned'">
+                    <span style="font-size:14px;" class="pos-receipt-right-align">Listo</span><br/>
+                </t>
+                <t t-if="values.state == 'done'">
+                    <span style="font-size:14px;" class="pos-receipt-right-align">Hecho</span><br/>
+                </t>
+                <span style="font-size:14px;">Ref. Transferencia:</span>
+                <span t-esc="values.name" style="font-size:14px;" class="pos-receipt-right-align"/><br/>
+                <span style="font-size:14px;">Usuario:</span>
+                <span t-esc="values.user_id[1]" style="font-size:14px;" class="pos-receipt-right-align"/><br/>
+            </div><hr/>
+
+            <div class="orderlines">
+                <span style="font-weight: bold; font-size:16px;">Productos</span>
+                <span style="font-weight: bold; font-size:16px;" class="pos-receipt-right-align">Cantidad</span><hr/>
+                <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                    <span style="font-size:14px;"><t t-esc="line.product_name"/></span>
+                    <span style="font-size:14px;" t-esc="line.quantity" class="price_display pos-receipt-right-align"/><br/>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

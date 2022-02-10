@@ -1,0 +1,11 @@
+<odoo>
+    <template id="assets_frontend" inherit_id="website_sale.assets_frontend">
+        <xpath expr="//link[last()]" position="after">
+            <link type="text/css" rel="stylesheet" href="/snippet_exchange/static/src/scss/style.scss"/>
+        </xpath>
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/snippet_exchange/static/src/js/snippet.js"/>
+            <script type="text/javascript" src="/snippet_exchange/static/src/js/widget.js"/>
+        </xpath>
+    </template>
+</odoo>

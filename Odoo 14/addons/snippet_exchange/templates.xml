@@ -1,0 +1,37 @@
+<odoo>
+    <template id="snippets" inherit_id="website.snippets">
+<!--        <xpath expr="//div[@id='snippet_structure']//t[@t-snippet='website.s_images_wall'][last()]" position="after">-->
+        <xpath expr="//div[@id='snippet_structure']//t[@t-snippet][last()]" position="after">
+            <t t-snippet="snippet_exchange.templ_exchange" t-thumbnail="/snippet_exchange/static/src/img/exchange.png"/>
+        </xpath>
+    </template>
+    <template t-name="snippet_exchange.templ_exchange" name="Snippets Exchange">
+        <section class="s_exchange pt32 pb32">
+            <div>
+                <h2>Tipo de Cambio</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus aliquam commodi cumque deserunt hic ipsa laborum molestias mollitia nisi perferendis provident recusandae.</p>
+            </div>
+            <label for="currency_from">Moneda desde</label>
+            <select name="currency_from">
+            </select>
+            <br/>
+            <label for="currency_to">Moneda hasta</label>
+            <select name="currency_to">
+            </select>
+            <br/>
+            <label for="amount">Monto</label>
+            <input type="number" name="amount" value="1"/>
+            <br/>
+            <strong>Resultado:</strong> <span id="result"></span>
+        </section>
+    </template>
+    <template id="snippet_options" inherit_id="website.snippet_options" name="Opciones del Snippet">
+        <xpath expr="." position="inside">
+            <div data-js="SnippetExchange" data-selector=".s_exchange">
+                <we-button data-edit="" data-no-preview="true">
+                    <i class="fa fa-pencil"/> Editar
+                </we-button>
+            </div>
+        </xpath>
+    </template>
+</odoo>

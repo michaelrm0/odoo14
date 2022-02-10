@@ -1,0 +1,13 @@
+<odoo>
+    <record id="action_client_fronted_app" model="ir.actions.client">
+<!--        Este valor se mostrará en la pestaña-->
+        <field name="name">Frontend APP</field>
+<!--        Está llamándose a una acción de cliente generada en el js-->
+        <field name="tag">frontend_widget</field>
+    </record>
+
+    <menuitem id="menu_frontend_app"
+              name="Frontend APP"
+              action="action_client_fronted_app"
+              parent=""/>
+</odoo>

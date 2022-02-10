@@ -1,0 +1,7 @@
+<odoo>
+    <template id="assets" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <script src="/frontend_app/static/src/js/frontend.js" type="text/javascript"/>
+        </xpath>
+    </template>
+</odoo>

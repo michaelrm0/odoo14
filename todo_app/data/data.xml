@@ -1,0 +1,18 @@
+<odoo>
+    <record id="todo_app.tarea_1" model="todo.app">
+        <field name="name">Tarea #1: Programar una cita con el doctor</field>
+        <field name="state">Borrador</field>
+    </record>
+    <record id="todo_app.tarea_2" model="todo.app">
+        <field name="name">Tarea #2: Diseño CSS y HTML5</field>
+        <field name="state">Borrador</field>
+    </record>
+    <record id="todo_app.tarea_3" model="todo.app">
+        <field name="name">Tarea #3: Programar módulo 7</field>
+        <field name="state">Cancelada</field>
+    </record>
+    <record id="todo_app.tarea_4" model="todo.app">
+        <field name="name">Tarea #4: Limpiar</field>
+        <field name="state">Terminado</field>
+    </record>
+</odoo>

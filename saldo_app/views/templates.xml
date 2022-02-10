@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <template id="assets_frontend" inherit_id="website.assets_frontend" name="Custom Module">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/saldo_app/static/src/js/sa_module.js"/>
+                <link rel="stylesheet" href="/saldo_app/static/src/css/sa_module.css"/>
+            </xpath>
+        </template>
+
+        <template id="index" name="Custom Template">
+            <t t-call="website.layout">
+                <div class="oe_structure">
+                    <strong>Hola mundo, estoy dentro de un template</strong>
+                </div>
+            </t>
+        </template>
+
+<!--        <template id="assets" inherit_id="point_of_sale.assets">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <script type="text/javascript" src="/saldo_app/static/src/js/pos_demo.js"></script>-->
+<!--            <link rel="stylesheet" href="/saldo_app/static/src/scss/pos_demo.scss"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+    </data>
+</odoo>

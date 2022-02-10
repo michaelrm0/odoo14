@@ -1,0 +1,18 @@
+<odoo>
+    <template id="assets_internal_transfer" inherit_id="point_of_sale.assets">
+        <xpath expr="//script[last()]" position="after">
+            <link rel="stylesheet" href="/pos_internal_transfer/static/src/css/style.css"/>
+        </xpath>
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/models.js"/>
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/screen_product_item.js"/>
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/receipt_internal_transfer.js"/>
+
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/screen_internal_transfer_popup.js"/>
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/screen_internal_transfer_button.js"/>
+
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/screen_print_component.js"/>
+            <script type="text/javascript" src="/pos_internal_transfer/static/src/js/screen_confirm_popup.js"/>
+        </xpath>
+    </template>
+</odoo>
