@@ -1,0 +1,26 @@
+<odoo>
+   <record id="pos_coupons_config_view_form_" model="ir.ui.view">
+       <field name="name">pos.config.coupons.form.view</field>
+       <field name="model">pos.config</field>
+       <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+       <field name="arch" type="xml">
+           <!-- Add boolean and many2one field in pos settings-->
+           <xpath expr="//div[@id='category_reference']" position="after">
+               <div class="col-12 col-lg-6 o_setting_box">
+                   <div class="o_setting_left_pane">
+                       <field name="coupon_category"/>
+                   </div>
+                   <div class="o_setting_right_pane">
+                       <label for="coupon_category"/>
+                       <div class="text-muted">
+                           Coupon Category
+                       </div>
+                       <div class="content-group mt16" attrs="{'invisible': [('coupon_category', '=', False)]}">
+                           <field name="category_id"/>
+                       </div>
+                   </div>
+               </div>
+           </xpath>
+       </field>
+   </record>
+</odoo>
